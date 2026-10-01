@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2>🎓 SMS</h2>
+        <p class="subtitle">Student Management</p>
+
+        <button onclick="showPage('dashboard')">🏠 Dashboard</button>
+        <button onclick="showPage('students')">👨‍🎓 Students</button>
+        <button onclick="showPage('addStudent')">➕ Add Student</button>
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main">
+
+        <!-- Dashboard -->
+        <section id="dashboard" class="page active">
+
+            <div class="top">
+                <div>
+                    <h1>Dashboard</h1>
+                    <p>Welcome to Student Management System</p>
+                </div>
+            </div>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="icon">👨‍🎓</div>
+                    <div>
+                        <h3>Total Students</h3>
+                        <h2 id="totalStudents">0</h2>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="icon">💻</div>
+                    <div>
+                        <h3>IT Students</h3>
+                        <h2 id="itCount">0</h2>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="icon">🖥️</div>
+                    <div>
+                        <h3>CSE Students</h3>
+                        <h2 id="cseCount">0</h2>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="icon">⚡</div>
+                    <div>
+                        <h3>ECE Students</h3>
+                        <h2 id="eceCount">0</h2>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-box">
+                <h2>Department-wise Student Count</h2>
+
+                <div class="department">
+                    <span>Information Technology</span>
+                    <strong id="itCount2">0</strong>
+                </div>
+
+                <div class="department">
+                    <span>Computer Science</span>
+                    <strong id="cseCount2">0</strong>
+                </div>
+
+                <div class="department">
+                    <span>Electronics & Communication</span>
+                    <strong id="eceCount2">0</strong>
+                </div>
+
+                <div class="department">
+                    <span>Mechanical</span>
+                    <strong id="mechCount">0</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Students -->
+        <section id="students" class="page">
+
+            <div class="top">
+                <div>
+                    <h1>Student List</h1>
+                    <p>Manage student records</p>
+                </div>
+
+                <button class="add-btn" onclick="showPage('addStudent')">
+                    + Add Student
+                </button>
+            </div>
+
+
+            <div class="tools">
+
+                <input
+                    type="text"
+                    id="search"
+                    placeholder="🔍 Search by name or register number..."
+                    onkeyup="displayStudents()"
+                >
+
+                <select id="departmentFilter" onchange="displayStudents()">
+                    <option value="">All Departments</option>
+                    <option value="IT">IT</option>
+                    <option value="CSE">CSE</option>
+                    <option value="ECE">ECE</option>
+                    <option value="MECH">MECH</option>
+                </select>
+
+                <select id="yearFilter" onchange="displayStudents()">
+                    <option value="">All Years</option>
+                    <option value="I">I Year</option>
+                    <option value="II">II Year</option>
+                    <option value="III">III Year</option>
+                    <option value="IV">IV Year</option>
+                </select>
+
+                <select id="sortFilter" onchange="displayStudents()">
+                    <option value="">Sort</option>
+                    <option value="nameAsc">Name A-Z</option>
+                    <option value="nameDesc">Name Z-A</option>
+                    <option value="regAsc">Register No ↑</option>
+                    <option value="regDesc">Register No ↓</option>
+                </select>
+
+            </div>
+
+
+            <div class="table-box">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Register No</th>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Year</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="studentTable"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- Add Student -->
+        <section id="addStudent" class="page">
+
+            <div class="top">
+                <div>
+                    <h1>Add Student</h1>
+                    <p>Add a new student record</p>
+                </div>
+            </div>
+
+
+            <div class="form-box">
+
+                <form id="studentForm">
+
+                    <div class="form-grid">
+
+                        <div class="input-group">
+                            <label>Register Number</label>
+                            <input type="text" id="regNo" placeholder="Example: 23IT001" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Student Name</label>
+                            <input type="text" id="name" placeholder="Enter student name" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Email</label>
+                            <input type="email" id="email" placeholder="student@gmail.com" required>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Phone Number</label>
+                            <input
+                                type="tel"
+                                id="phone"
+                                placeholder="10 digit phone number"
+                                pattern="[0-9]{10}"
+                                required
+                            >
+                        </div>
+
+                        <div class="input-group">
+                            <label>Department</label>
+
+                            <select id="department" required>
+                                <option value="">Select Department</option>
+                                <option value="IT">IT</option>
+                                <option value="CSE">CSE</option>
+                                <option value="ECE">ECE</option>
+                                <option value="MECH">MECH</option>
+                            </select>
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label>Year / Semester</label>
+
+                            <select id="year" required>
+
+                                <option value="">Select Year</option>
+                                <option value="I">I Year</option>
+                                <option value="II">II Year</option>
+                                <option value="III">III Year</option>
+                                <option value="IV">IV Year</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-buttons">
+
+                        <button type="reset" class="cancel-btn">
+                            Clear
+                        </button>
+
+                        <button type="submit" class="save-btn">
+                            Add Student
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
